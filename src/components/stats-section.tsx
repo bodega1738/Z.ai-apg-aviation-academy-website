@@ -7,8 +7,9 @@ const alumniMilestones = [
     year: "2000",
     title: "Our Foundation",
     description: "APG Aviation Academy opened its doors",
-    image: "/placeholder-user.jpg",
-    quote: "We started with a dream to create world-class pilots"
+    image: "/facility.png",
+    quote: "We started with a dream to create world-class pilots",
+    hasImage: true
   },
   {
     year: "2005",
@@ -159,12 +160,13 @@ export function StatsSection() {
           <div className="mb-20">
             <div className="relative">
               {/* Timeline Line */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-px h-full bg-gradient-to-b from-[#E53935] via-[#d97706] to-[#E53935]" />
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-px bg-gradient-to-b from-[#E53935] via-[#d97706] to-[#E53935]" 
+                   style={{ top: '2rem', bottom: '2rem' }} />
               
               {/* Timeline Events */}
-              <div className="space-y-12">
+              <div className="space-y-16">
                 {alumniMilestones.map((milestone, index) => (
-                  <div key={index} className={`relative flex items-center ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
+                  <div key={index} className={`relative flex items-start ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}>
                     <div className={`w-5/12 ${index % 2 === 0 ? 'text-right pr-8' : 'text-left pl-8'}`}>
                       <div className="group relative">
                         {/* Year Badge */}
@@ -176,11 +178,34 @@ export function StatsSection() {
                         <h3 className="text-lg font-semibold text-white mb-1">{milestone.title}</h3>
                         <p className="text-sm text-white/70 mb-2">{milestone.description}</p>
                         <p className="text-xs text-[#d97706] italic">"{milestone.quote}"</p>
+                        
+                        {/* Facility Image for Foundation */}
+                        {milestone.hasImage && (
+                          <div className="mt-4 relative">
+                            <div className="relative rounded-lg overflow-hidden shadow-2xl border-2 border-[#E53935]/20">
+                              <Image
+                                src={milestone.image}
+                                alt={milestone.title}
+                                width={500}
+                                height={300}
+                                className="w-full h-auto object-cover"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                              {/* Image Caption */}
+                              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                                <p className="text-white text-sm font-medium">
+                                  Our state-of-the-art aviation facility
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                     
-                    {/* Center Dot */}
-                    <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-[#E53935] rounded-full border-4 border-[#212A36] z-10" />
+                    {/* Center Dot - Positioned to align with content */}
+                    <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-[#E53935] rounded-full border-4 border-[#212A36] z-10" 
+                         style={{ top: milestone.hasImage ? '2rem' : '1.5rem' }} />
                   </div>
                 ))}
               </div>
