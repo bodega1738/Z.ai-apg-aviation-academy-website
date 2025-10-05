@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { Award, Users, Plane, Trophy, TrendingUp, Calendar, Heart, Star, MapPin, Eye, Maximize2 } from "lucide-react"
+import { Award, Users, Plane, Trophy, TrendingUp, Calendar, Heart, Star, MapPin } from "lucide-react"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
-import { FacilityModal } from "@/components/ui/facility-modal"
+import { SimpleModal } from "@/components/ui/simple-modal"
 
 const alumniMilestones = [
   {
@@ -87,18 +87,18 @@ const featuredAlumni = [
 export function StatsSection() {
   const [modalState, setModalState] = useState<{
     isOpen: boolean
-    milestone: typeof alumniMilestones[0] | null
+    description: string
   }>({
     isOpen: false,
-    milestone: null
+    description: ""
   })
 
-  const openModal = (milestone: typeof alumniMilestones[0]) => {
-    setModalState({ isOpen: true, milestone })
+  const openModal = (description: string) => {
+    setModalState({ isOpen: true, description })
   }
 
   const closeModal = () => {
-    setModalState({ isOpen: false, milestone: null })
+    setModalState({ isOpen: false, description: "" })
   }
   return (
     <>
@@ -199,61 +199,21 @@ export function StatsSection() {
                         <p className="text-sm text-white/70 mb-2">{milestone.description}</p>
                         <p className="text-xs text-[#d97706] italic">"{milestone.quote}"</p>
                         
-                        {/* Facility Image Modal Trigger for Foundation */}
+                        {/* Simple Image Trigger for Foundation */}
                         {milestone.hasImage && (
                           <div className="mt-4">
                             <button
-                              onClick={() => openModal(milestone)}
-                              className="group relative w-full rounded-lg overflow-hidden border-2 border-[#E53935]/20 bg-gradient-to-br from-[#E53935]/10 to-[#d97706]/10 hover:from-[#E53935]/20 hover:to-[#d97706]/20 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl"
+                              onClick={() => openModal(milestone.facilityDescription || "Our state-of-the-art aviation facility")}
+                              className="w-full aspect-video relative rounded-lg overflow-hidden border-2 border-gray-300 hover:border-gray-400 transition-colors"
                             >
-                              {/* Preview Thumbnail */}
-                              <div className="relative aspect-video">
-                                <Image
-                                  src={milestone.image}
-                                  alt={milestone.title}
-                                  fill
-                                  className="object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-300"
-                                />
-                                
-                                {/* Overlay with Preview Effect */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex items-center justify-center">
-                                  <div className="text-center">
-                                    <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-3 mx-auto group-hover:scale-110 transition-transform duration-300">
-                                      <Eye className="w-8 h-8 text-white" />
-                                    </div>
-                                    <p className="text-white font-semibold text-sm mb-1">
-                                      View Facility
-                                    </p>
-                                    <p className="text-white/80 text-xs">
-                                      Click to explore our foundation
-                                    </p>
-                                  </div>
-                                </div>
-                                
-                                {/* Hover Effects */}
-                                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                  <div className="bg-black/60 backdrop-blur-sm px-2 py-1 rounded-full flex items-center gap-1">
-                                    <Maximize2 className="w-3 h-3 text-white" />
-                                    <span className="text-xs text-white">Interactive</span>
-                                  </div>
-                                </div>
-                                
-                                {/* Shimmer Effect */}
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                              </div>
-                              
-                              {/* Bottom Bar */}
-                              <div className="p-3 bg-black/40 backdrop-blur-sm border-t border-white/10">
-                                <div className="flex items-center justify-between">
-                                  <div className="flex items-center gap-2">
-                                    <MapPin className="w-4 h-4 text-[#E53935]" />
-                                    <span className="text-white text-xs font-medium">Our Aviation Facility</span>
-                                  </div>
-                                  <div className="flex items-center gap-1">
-                                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                                    <span className="text-white/60 text-xs">Interactive View</span>
-                                  </div>
-                                </div>
+                              <Image
+                                src={milestone.image}
+                                alt={milestone.title}
+                                fill
+                                className="object-cover"
+                              />
+                              <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                                <span className="text-white font-medium">View Image</span>
                               </div>
                             </button>
                           </div>
@@ -392,17 +352,13 @@ export function StatsSection() {
         </div>
       </section>
 
-      {/* Facility Modal */}
-      {modalState.milestone && (
-        <FacilityModal
-          isOpen={modalState.isOpen}
-          onClose={closeModal}
-          imageSrc={modalState.milestone.image}
-          title={modalState.milestone.title}
-          description={modalState.milestone.facilityDescription || "Our state-of-the-art aviation facility"}
-          year={modalState.milestone.year}
-        />
-      )}
+      {/* Simple Modal */}
+      <SimpleModal
+        isOpen={modalState.isOpen}
+        onClose={closeModal}
+        imageSrc="/facility.png"
+        description={modalState.description}
+      />
     </>
   )
 }
