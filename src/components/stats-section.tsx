@@ -102,23 +102,6 @@ export function StatsSection() {
   }
   return (
     <>
-      {/* Visual Separator - Cinematic Transition */}
-      <div className="relative h-32 overflow-hidden">
-        {/* Gradient Bridge connecting Hero to Milestones */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: "linear-gradient(135deg, rgba(33, 42, 54, 0.95) 0%, rgba(33, 42, 54, 0.85) 40%, rgba(33, 42, 54, 0.60) 60%, rgba(33, 42, 54, 0.40) 100%)"
-          }}
-        />
-        {/* Animated Accent Line */}
-        <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#E53935] to-transparent animate-pulse" />
-        {/* Floating Elements */}
-        <div className="absolute top-4 left-1/4 w-2 h-2 bg-[#E53935] rounded-full animate-pulse opacity-60" />
-        <div className="absolute bottom-6 right-1/3 w-1 h-1 bg-white rounded-full animate-pulse opacity-40" />
-        <div className="absolute top-8 right-1/4 w-1.5 h-1.5 bg-[#d97706] rounded-full animate-pulse opacity-50" />
-      </div>
-
       {/* Main Milestones Section */}
       <section 
         className="relative py-24 overflow-hidden"
